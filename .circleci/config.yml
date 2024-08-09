@@ -7,16 +7,30 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install GPG Key
-          command: |
-            sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys C0BA5CE6DC6315A3
-      - run:
           name: Install Dependencies
           command: |
             sudo apt-get update
-            sudo apt-get install -y ruby-full
-            gem install domain_name -v 0.5.20190701
-            sudo gem install fastlane
+            sudo apt-get install -y \
+              curl \
+              git \
+              libssl-dev \
+              libreadline-dev \
+              zlib1g-dev \
+              libsqlite3-dev \
+              libxml2-dev \
+              libxslt1-dev \
+              libcurl4-openssl-dev \
+              build-essential \
+              libffi-dev
+
+            # Install rbenv and Ruby 3.3
+            curl -fsSL https://github.com/rbenv/rbenv-installer/raw/main/bin/rbenv-installer | bash
+            export PATH="$HOME/.rbenv/bin:$PATH"
+            eval "$(rbenv init -)"
+            rbenv install 3.3.0
+            rbenv global 3.3.0
+
+            gem install fastlane
             fastlane --version
       - run:
           name: Build and Deploy
