@@ -15,7 +15,7 @@ jobs:
           command: |
             sudo apt-get update
             sudo apt-get install -y ruby-full
-            gem install fastlane
+            sudo gem install fastlane
             fastlane --version
       - run:
           name: Build and Deploy
